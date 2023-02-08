@@ -50,3 +50,26 @@ class StudentConnector:
         conn.close()
         cursor.close()
         return  cursor.rowcount
+    def remove_student(self,id):
+        mysql = MySQL()
+        app = Flask(__name__)
+        # MySQL configurations
+        app.config['MYSQL_DATABASE_USER'] = 'root'
+        app.config['MYSQL_DATABASE_PASSWORD'] = '@Obama123'
+        app.config['MYSQL_DATABASE_DB'] = 'studentmanagement'
+        app.config['MYSQL_DATABASE_HOST'] = 'localhost'
+        mysql.init_app(app)
+
+        conn = mysql.connect()
+        print("connection is successful!")
+
+        cursor = conn.cursor()
+        sql = "DELETE from student where ID=%s"
+        val=(id)
+        cursor.execute(sql,val)
+
+        conn.commit()
+
+        conn.close()
+        cursor.close()
+        return cursor.rowcount

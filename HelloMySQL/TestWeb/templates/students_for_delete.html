@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+     <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.3.js"></script>
+</head>
+<body>
+<h3>list student here</h3>
+<table width="100%" border="1">
+    <tr>
+        <th>ID</th>
+        <th>Code</th>
+        <th>Name</th>
+    </tr>
+    <tbody>
+        {% for student in students%}
+        <tr>
+           <td>{{student.ID}}</td>
+           <td>{{student.Code}}</td>
+           <td>{{student.Name}}</td>
+           <td><input type="button" id="btnremove" onclick="xulyxoa({{student.ID}})" value="remove"> </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<script>
+    function xulyxoa(id)
+    {
+        if (confirm("Are you sure you want to remove?!") == false) {
+          return
+        }
+        p="ID="+id;
+        $.ajax({
+			url: '/confirmremovestudent?'+p,
+			data: p,
+			type: 'POST',
+			success: function(response){
+				console.log(response);
+				location.reload();
+			},
+			error: function(error){
+				console.log(error);
+			}
+		});
+    }
+</script>
+</body>
+</html>

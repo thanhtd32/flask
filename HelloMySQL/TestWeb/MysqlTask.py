@@ -32,5 +32,16 @@ def signup():
     return result
     #return redirect(url_for('students'))
     #return redirect('/students')
+@app.route("/students_remove/")
+def studentsremove():
+    sconn = StudentConnector()
+    students = sconn.get_list_students()
+    return render_template("students_for_delete.html", students=students)
+@app.route("/confirmremovestudent",methods=['POST','GET'])
+def confirmremovestudent():
+    ID = request.args.get('ID')
+    sconn = StudentConnector()
+    result=sconn.remove_student(int(ID))
+    return  "result"
 if __name__ =='__main__':
     app.run(host="localhost",port=9090,debug=True)
